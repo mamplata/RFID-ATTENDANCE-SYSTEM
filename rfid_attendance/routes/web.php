@@ -27,18 +27,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('users', UserController::class);
 });
 
-Route::post('/store-uid', function (Request $request) {
-    $uid = $request->input('uid');
-    
-    if ($uid) {
-        // Store UID in cache for later retrieval (expires in 5 minutes)
-        Cache::put('latest_uid', $uid, now()->addMinutes(5));
-        
-        return response()->json(['message' => 'UID stored successfully', 'uid' => $uid]);
-    } else {
-        return response()->json(['message' => 'UID missing'], 400);
-    }
-});
 Route::get('/test', function () {
     return response()->json(['uid' => Cache::get('latest_uid', 'No UID received yet')]);
 });

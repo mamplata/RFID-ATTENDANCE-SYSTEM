@@ -25,6 +25,22 @@ function handleImageError() {
     document.getElementById('background')?.classList.add('!hidden');
 }
 </script>
+<script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+<script>
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('05efff840969c6ac7aa0', {
+        cluster: 'ap1',
+        encrypted: true
+    });
+
+    var channel = pusher.subscribe('attendance');
+    channel.bind('UidScanned', function(data) {
+        console.log('New UID Scanned:', data.uid);
+        // You can update the DOM or perform any action you want here
+    });
+</script>
 
 <template>
     <Head title="Welcome" />
